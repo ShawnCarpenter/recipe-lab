@@ -166,5 +166,56 @@ describe('recipe-lab routes', () => {
       .then(res => expect(res.body).toEqual({ ...log, dateOfEvent: log.dateOfEvent.toISOString() }));
   });
 
-  
+  it('updates a log by id', async() => {
+    
+    const recipe = await Recipe.insert({
+      name: 'cookies',
+      directions: [
+        'preheat oven to 375',
+        'mix ingredients',
+        'put dough on cookie sheet',
+        'bake for 10 minutes'
+      ],
+    });
+    const log = await Log.insert({ 
+      recipeId: recipe.id,
+      dateOfEvent: '2020-09-22',
+      notes: 'Yum', rating: 10 });
+    return request(app)
+      .put(`/api/v1/logs/${log.id}`)
+      .send({ 
+        id: log.id,
+        recipeId: recipe.id,
+        dateOfEvent: '2020-09-22', 
+        notes: 'Never mind I gt sick after eating this, bad', 
+        rating: 1 })
+      .then(res => {
+        expect(res.body).toEqual({ 
+          id: log.id,
+          recipeId: recipe.id,
+          dateOfEvent: '2020-09-22T07:00:00.000Z', 
+          notes: 'Never mind I gt sick after eating this, bad', 
+          rating: 1 });
+      });
+  });
+  it('deletes a log by id', async() => {
+    const recipe = await Recipe.insert({
+      name: 'cookies',
+      directions: [
+        'preheat oven to 375',
+        'mix ingredients',
+        'put dough on cookie sheet',
+        'bake for 10 minutes'
+      ],
+    });
+    const log = await Log.insert({
+      recipeId: recipe.id,
+      dateOfEvent: '2020-09-22',
+      notes: 'yum',
+      rating: 10
+    });
+    return request(app)
+      .delete(`/api/v1/logs/${log.id}`)
+      .then(res => expect(res.body).toEqual({ ...log, dateOfEvent: log.dateOfEvent.toISOString() }));
+  });
 });
