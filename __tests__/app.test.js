@@ -20,6 +20,10 @@ describe('recipe-lab routes', () => {
           'mix ingredients',
           'put dough on cookie sheet',
           'bake for 10 minutes'
+        ],
+        ingredients: [
+          { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+          { amount: 1, measurement: 'cup', name: 'flour' }
         ]
       })
       .then(res => {
@@ -31,6 +35,10 @@ describe('recipe-lab routes', () => {
             'mix ingredients',
             'put dough on cookie sheet',
             'bake for 10 minutes'
+          ],
+          ingredients: [
+            { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+            { amount: 1, measurement: 'cup', name: 'flour' }
           ]
         });
       });
@@ -38,7 +46,10 @@ describe('recipe-lab routes', () => {
 
   it('gets all recipes', async() => {
     const recipes = await Promise.all([
-      { name: 'cookies', directions: [] },
+      { name: 'cookies', directions: [], ingredients: [
+        { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+        { amount: 1, measurement: 'cup', name: 'flour' }
+      ] },
       { name: 'cake', directions: [] },
       { name: 'pie', directions: [] }
     ].map(recipe => Recipe.insert(recipe)));
@@ -69,6 +80,10 @@ describe('recipe-lab routes', () => {
         'put dough on cookie sheet',
         'bake for 10 minutes'
       ],
+      ingredients: [
+        { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+        { amount: 1, measurement: 'cup', name: 'flour' }
+      ]
     });
 
     return request(app)
@@ -80,6 +95,10 @@ describe('recipe-lab routes', () => {
           'mix ingredients',
           'put dough on cookie sheet',
           'bake for 10 minutes'
+        ],
+        ingredients: [
+          { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+          { amount: 1, measurement: 'cup', name: 'flour' }
         ]
       })
       .then(res => {
@@ -91,6 +110,10 @@ describe('recipe-lab routes', () => {
             'mix ingredients',
             'put dough on cookie sheet',
             'bake for 10 minutes'
+          ],
+          ingredients: [
+            { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+            { amount: 1, measurement: 'cup', name: 'flour' }
           ]
         });
       });
