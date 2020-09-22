@@ -158,4 +158,13 @@ describe('recipe-lab routes', () => {
       });
   });
 
+  it('gets a log by id', async() => {
+    const recipe = await Recipe.insert({ name: 'cookies', directions: [] });
+    const log = await Log.insert({ recipeId: recipe.id, dateOfEvent: '2020-09-22', notes: 'Yum', rating: 10 });
+    return request(app)
+      .get(`/api/v1/logs/${log.id}`)
+      .then(res => expect(res.body).toEqual({ ...log, dateOfEvent: log.dateOfEvent.toISOString() }));
+  });
+
+  
 });
