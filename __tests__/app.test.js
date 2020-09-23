@@ -216,7 +216,7 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual({ 
           id: log.id,
           recipeId: recipe.id,
-          dateOfEvent: '2020-09-22T07:00:00.000Z', 
+          dateOfEvent: '2020-09-22T00:00:00.000Z', 
           notes: 'Never mind I gt sick after eating this, bad', 
           rating: 1 });
       });
