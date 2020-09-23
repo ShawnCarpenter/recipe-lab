@@ -71,6 +71,31 @@ describe('recipe-lab routes', () => {
       .then(res => expect(res.body).toEqual(recipe));
   });
 
+  it('gets a recipe by ID and the logs for it', async() => {
+    const recipe = await Recipe.insert({
+      name: 'cookies',
+      directions: [
+        'preheat oven to 375',
+        'mix ingredients',
+        'put dough on cookie sheet',
+        'bake for 10 minutes'
+      ],
+    });
+    await Promise.all([
+      { recipeId: recipe.id, dateOfEvent: '2020-09-22', notes: 'Yum', rating: 10 },
+      { recipeId: recipe.id, dateOfEvent: '2020-09-22', notes: 'Yuck', rating: 1 },
+      { recipeId: recipe.id, dateOfEvent: '2020-09-22', notes: 'OK', rating: 5 }
+    ].map(log => Log.insert(log)));
+    return request(app)
+      .get(`/api/v1/recipes/${recipe.id}/logs`)
+      .then(res => expect(res.body).toEqual({ ...recipe, 
+        logs: expect.arrayContaining([
+          { id: expect.any(String), recipeId: recipe.id, dateOfEvent: expect.stringContaining('2020-09-22'), notes: 'Yum', rating: 10 },
+          { id: expect.any(String), recipeId: recipe.id, dateOfEvent: expect.stringContaining('2020-09-22'), notes: 'Yuck', rating: 1 },
+          { id: expect.any(String), recipeId: recipe.id, dateOfEvent: expect.stringContaining('2020-09-22'), notes: 'OK', rating: 5 }
+        ]) }));
+  });
+
   it('updates a recipe by id', async() => {
     const recipe = await Recipe.insert({
       name: 'cookies',
