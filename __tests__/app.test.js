@@ -149,7 +149,7 @@ describe('recipe-lab routes', () => {
         expect(res.body).toEqual({
           id: expect.any(String),
           recipeId: recipe.id,
-          dateOfEvent: '2020-09-22T07:00:00.000Z',
+          dateOfEvent: '2020-09-22T00:00:00.000Z',
           notes: 'Yummy, would make again',
           rating: 10
         });
