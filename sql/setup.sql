@@ -10,7 +10,7 @@ CREATE TABLE recipes (
 
 CREATE TABLE logs (
   id BIGINT GENERATED ALWAYS AS IDENTITY,
-  recipe_id BIGINT NOT NULL REFERENCES recipes(id),
+  recipe_id BIGINT NOT NULL REFERENCES recipes(id) ON DELETE CASCADE,
   date_of_event DATE NOT NULL,
   notes TEXT,
   rating INT
