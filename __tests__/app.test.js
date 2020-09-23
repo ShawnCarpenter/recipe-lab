@@ -230,6 +230,10 @@ describe('recipe-lab routes', () => {
         'put dough on cookie sheet',
         'bake for 10 minutes'
       ],
+      ingredients: [
+        { amount: 1, measurement: 'teaspoon', name: 'sugar' },
+        { amount: 1, measurement: 'cup', name: 'flour' }
+      ]
     });
     const log = await Log.insert({
       recipeId: recipe.id,
